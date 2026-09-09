@@ -33,7 +33,8 @@ export class BookingService {
                   fechaSeleccionada.getFullYear() === hoy.getFullYear();
     const minutosActuales = hoy.getHours() * 60 + hoy.getMinutes();
 
-    for (let time = start; time < end; time += duracion) {
+    // time <= end permite que se generen citas hasta exactamente las 8:00 PM
+    for (let time = start; time <= end; time += duracion) {
       const hours = Math.floor(time / 60).toString().padStart(2, '0');
       const mins = (time % 60).toString().padStart(2, '0');
       

@@ -9,9 +9,15 @@ import { AuthService } from '../../core/services/auth.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   template: `
-    <div class="min-h-screen flex items-center justify-center p-4 font-sans text-white">
-      <div class="bg-black/80 backdrop-blur-md border border-amber-500/30 p-8 rounded-2xl shadow-2xl max-w-sm w-full">
-        <h2 class="text-3xl font-extrabold text-amber-500 text-center mb-2 uppercase tracking-wider drop-shadow-lg">Harol Barber</h2>
+    <div class="relative min-h-screen flex items-center justify-center p-4 font-sans text-white overflow-hidden">
+      <!-- Imagen de fondo con filtro oscuro -->
+      <div class="absolute inset-0 bg-[url('/Portada.jpg')] bg-cover bg-center bg-no-repeat"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/90"></div>
+      
+      <!-- Contenedor del Formulario -->
+      <div class="relative z-10 bg-black/60 backdrop-blur-xl border border-amber-500/30 p-8 md:p-10 rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.8)] max-w-sm w-full">
+        <div class="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl"></div>
+        <h2 class="relative z-10 text-3xl font-extrabold text-amber-500 text-center mb-2 uppercase tracking-wider drop-shadow-lg">STIVEN TAPIA</h2>
         <p class="text-center text-gray-400 mb-8 font-medium">Acceso Administrativo</p>
         
         <form (ngSubmit)="onSubmit()" class="flex flex-col gap-5">

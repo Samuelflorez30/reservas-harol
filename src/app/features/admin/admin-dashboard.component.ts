@@ -10,38 +10,60 @@ import { Servicio } from '../../core/models/servicio.model';
   standalone: true,
   imports: [CommonModule, FormsModule],
   template: `
-    <div class="min-h-screen p-4 md:p-8 font-sans text-white">
-      <div class="max-w-6xl mx-auto">
+    <div class="relative min-h-screen font-sans text-white">
+      <!-- Imagen de fondo con filtro oscuro -->
+      <div class="fixed inset-0 bg-[url('/Portada.jpg')] bg-cover bg-center bg-no-repeat z-0"></div>
+      <div class="fixed inset-0 bg-black/85 z-0"></div>
+      
+      <div class="relative z-10 max-w-6xl mx-auto p-4 md:p-8">
         
         <!-- Header -->
-        <header class="flex flex-col md:flex-row justify-between items-center mb-8 bg-black/60 backdrop-blur-md border border-amber-500/30 p-6 rounded-2xl shadow-xl">
-          <div class="text-center md:text-left mb-4 md:mb-0">
-            <h1 class="text-3xl font-extrabold text-amber-500 uppercase tracking-wide drop-shadow-lg">Harol Barber - Admin</h1>
-            <p class="text-gray-400 font-medium mt-1">Panel de Control</p>
+        <header class="flex flex-col md:flex-row justify-between items-center mb-10 bg-black/80 backdrop-blur-md border border-amber-500/40 p-6 md:p-8 rounded-3xl shadow-2xl relative overflow-hidden">
+          <!-- Decoración de fondo -->
+          <div class="absolute -top-24 -left-24 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl"></div>
+          
+          <div class="text-center md:text-left mb-6 md:mb-0 relative z-10 flex items-center gap-4">
+            <div class="bg-amber-500/20 p-3 rounded-2xl border border-amber-500/30">
+              <svg class="w-10 h-10 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"></path></svg>
+            </div>
+            <div>
+              <h1 class="text-4xl font-extrabold text-white uppercase tracking-wider drop-shadow-lg flex items-center gap-2">
+                Stiven <span class="text-amber-500">Tapia</span>
+              </h1>
+              <p class="text-amber-500/80 font-bold uppercase tracking-widest text-xs mt-1">Admin Control Panel</p>
+            </div>
           </div>
-          <button (click)="logout()" class="px-6 py-2 bg-zinc-800 hover:bg-zinc-700 text-white font-bold rounded-xl border border-zinc-600 transition shadow-lg">Cerrar Sesión</button>
+          <button (click)="logout()" class="relative z-10 px-6 py-3 bg-red-600/10 hover:bg-red-600/20 text-red-500 font-bold rounded-xl border border-red-500/30 transition shadow-lg flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+            Cerrar Sesión
+          </button>
         </header>
 
         <!-- Tabs -->
-        <div class="flex gap-4 mb-8">
+        <div class="flex flex-wrap gap-3 mb-10 bg-black/40 p-2 rounded-2xl border border-zinc-800/50 backdrop-blur-sm w-fit mx-auto md:mx-0">
           <button 
             (click)="activeTab.set('citas')" 
             [class.bg-amber-500]="activeTab() === 'citas'"
             [class.text-black]="activeTab() === 'citas'"
-            [class.bg-black_60]="activeTab() !== 'citas'"
-            [class.border-amber-500]="activeTab() === 'citas'"
-            class="flex-1 md:flex-none px-6 py-3 rounded-xl font-bold uppercase tracking-wider transition border border-zinc-700 hover:border-amber-500 bg-black/60 backdrop-blur-md"
+            [class.shadow-[0_0_15px_rgba(245,158,11,0.3)]]="activeTab() === 'citas'"
+            [class.text-gray-400]="activeTab() !== 'citas'"
+            [class.hover:bg-zinc-800]="activeTab() !== 'citas'"
+            class="flex items-center gap-2 px-6 py-3 rounded-xl font-bold uppercase tracking-wider transition-all duration-300"
           >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
             Gestión de Citas
           </button>
           <button 
             (click)="activeTab.set('servicios'); cargarServicios()" 
             [class.bg-amber-500]="activeTab() === 'servicios'"
             [class.text-black]="activeTab() === 'servicios'"
-            [class.border-amber-500]="activeTab() === 'servicios'"
-            class="flex-1 md:flex-none px-6 py-3 rounded-xl font-bold uppercase tracking-wider transition border border-zinc-700 hover:border-amber-500 bg-black/60 backdrop-blur-md text-gray-300"
+            [class.shadow-[0_0_15px_rgba(245,158,11,0.3)]]="activeTab() === 'servicios'"
+            [class.text-gray-400]="activeTab() !== 'servicios'"
+            [class.hover:bg-zinc-800]="activeTab() !== 'servicios'"
+            class="flex items-center gap-2 px-6 py-3 rounded-xl font-bold uppercase tracking-wider transition-all duration-300"
           >
-            Catálogo de Servicios
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+            Catálogo
           </button>
         </div>
 
@@ -53,22 +75,32 @@ import { Servicio } from '../../core/models/servicio.model';
 
           <div *ngIf="!loadingCitas()" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @for (cita of citas(); track cita.id) {
-              <div class="bg-black/80 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-amber-500/30 flex flex-col justify-between gap-6 hover:border-amber-500/80 transition-all">
-                <div>
-                  <div class="flex justify-between items-start mb-4">
-                    <h3 class="font-extrabold text-xl text-white">{{ cita.cliente_nombre }}</h3>
-                    <span class="bg-amber-500 text-black text-xs font-bold px-3 py-1 rounded-md uppercase tracking-wider">{{ cita.fecha }}</span>
+              <div class="bg-black/80 backdrop-blur-md p-6 rounded-3xl shadow-2xl border border-amber-500/30 flex flex-col justify-between gap-6 hover:border-amber-500/80 transition-all group relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl group-hover:bg-amber-500/20 transition-all duration-500"></div>
+                <div class="relative z-10">
+                  <div class="flex justify-between items-start mb-6">
+                    <div>
+                      <span class="bg-zinc-800 text-amber-500 border border-zinc-700 text-xs font-bold px-3 py-1 rounded-lg uppercase tracking-widest">{{ cita.fecha }}</span>
+                      <h3 class="font-extrabold text-2xl text-white mt-3">{{ cita.cliente_nombre }}</h3>
+                    </div>
+                    <span class="text-3xl font-black text-amber-500 drop-shadow-md">{{ cita.hora.substring(0, 5) }}</span>
                   </div>
-                  <div class="space-y-2 bg-zinc-900/60 p-4 rounded-xl border border-zinc-800">
-                    <p class="text-gray-300 text-sm flex justify-between"><span class="text-amber-500 font-bold uppercase text-xs">Hora:</span> <span class="font-medium text-white">{{ cita.hora.substring(0, 5) }}</span></p>
-                    <p class="text-gray-300 text-sm flex justify-between"><span class="text-amber-500 font-bold uppercase text-xs">Teléfono:</span> <span class="font-medium text-white">{{ cita.cliente_telefono }}</span></p>
-                    <p class="text-gray-300 text-sm flex justify-between"><span class="text-amber-500 font-bold uppercase text-xs">Servicio:</span> <span class="font-medium text-white text-right ml-4">{{ cita.servicios?.nombre || 'General' }}</span></p>
+                  <div class="space-y-3 bg-zinc-900/60 p-4 rounded-2xl border border-zinc-800/50">
+                    <div class="flex items-center gap-3">
+                      <div class="bg-amber-500/10 p-2 rounded-lg text-amber-500"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg></div>
+                      <span class="font-medium text-gray-300">{{ cita.cliente_telefono }}</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                      <div class="bg-amber-500/10 p-2 rounded-lg text-amber-500"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"></path></svg></div>
+                      <span class="font-medium text-gray-300">{{ cita.servicios?.nombre || 'General' }}</span>
+                    </div>
                   </div>
                 </div>
                 
                 <button 
                   (click)="cancelarCita(cita)"
-                  class="w-full bg-red-600/90 text-white py-3 rounded-xl font-bold shadow-lg shadow-red-600/20 hover:bg-red-500 transition border border-red-500/50">
+                  class="relative z-10 w-full bg-red-600/10 text-red-500 py-3.5 rounded-xl font-bold hover:bg-red-600 hover:text-white transition-all border border-red-500/50 flex items-center justify-center gap-2">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                   Cancelar y Notificar
                 </button>
               </div>
@@ -83,9 +115,11 @@ import { Servicio } from '../../core/models/servicio.model';
 
         <!-- TAB SERVICIOS -->
         <div *ngIf="activeTab() === 'servicios'">
-          <div class="flex justify-end mb-6">
-            <button (click)="abrirModal()" class="bg-amber-500 text-black px-6 py-3 rounded-xl font-extrabold uppercase tracking-wide hover:bg-amber-400 transition shadow-lg shadow-amber-500/20">
-              + Nuevo Servicio
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-extrabold text-white tracking-wide">Servicios Ofertados</h2>
+            <button (click)="abrirModal()" class="bg-amber-500 text-black px-5 py-2.5 rounded-xl font-bold uppercase tracking-wider hover:bg-amber-400 transition shadow-[0_0_20px_rgba(245,158,11,0.4)] flex items-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+              Crear
             </button>
           </div>
 

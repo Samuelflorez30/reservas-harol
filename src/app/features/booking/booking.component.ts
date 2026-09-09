@@ -186,8 +186,8 @@ export class BookingComponent implements OnInit {
   cancelLink = '';
 
   get whatsappLink() {
-    const msg = `Hola Harold, agendé una cita. Mi link privado de cancelación en caso de imprevistos es: ${this.cancelLink}`;
-    return `https://wa.me/573229098831?text=${encodeURIComponent(msg)}`; // Ajusta el código de país y número real aquí
+    const msg = `Hola Harol, agendé una cita. Mi link privado de cancelación en caso de imprevistos es: ${this.cancelLink}`;
+    return `https://wa.me/573183452539?text=${encodeURIComponent(msg)}`; // Ajusta el código de país y número real aquí
   }
 
   copiarLink() {

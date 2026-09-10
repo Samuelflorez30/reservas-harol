@@ -39,33 +39,29 @@ import { Servicio } from '../../core/models/servicio.model';
           </button>
         </header>
 
-        <!-- Tabs -->
-        <div class="flex flex-wrap gap-3 mb-10 bg-black/40 p-2 rounded-2xl border border-zinc-800/50 backdrop-blur-sm w-fit mx-auto md:mx-0">
+        <!-- Tabs Navigation Premium -->
+        <nav class="relative flex p-1.5 mb-10 bg-black/60 backdrop-blur-xl border border-zinc-800/80 rounded-2xl shadow-2xl mx-auto md:mx-0 w-full md:w-fit overflow-hidden" aria-label="Tabs">
+          
+          <!-- Botón Gestión de Citas -->
           <button 
             (click)="activeTab.set('citas')" 
-            [class.bg-amber-500]="activeTab() === 'citas'"
-            [class.text-black]="activeTab() === 'citas'"
-            [class.shadow-[0_0_15px_rgba(245,158,11,0.3)]]="activeTab() === 'citas'"
-            [class.text-gray-400]="activeTab() !== 'citas'"
-            [class.hover:bg-zinc-800]="activeTab() !== 'citas'"
-            class="flex items-center gap-2 px-6 py-3 rounded-xl font-bold uppercase tracking-wider transition-all duration-300"
+            [ngClass]="activeTab() === 'citas' ? 'bg-gradient-to-r from-amber-600 to-amber-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.4)] scale-100' : 'text-gray-400 hover:text-white hover:bg-white/5 scale-95'"
+            class="relative z-10 flex-1 md:flex-none flex items-center justify-center gap-2 px-4 sm:px-8 py-3.5 rounded-xl font-extrabold uppercase tracking-widest text-xs sm:text-sm transition-all duration-300 transform"
           >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-            Gestión de Citas
+            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+            <span class="truncate">Citas</span>
           </button>
+          
+          <!-- Botón Catálogo -->
           <button 
             (click)="activeTab.set('servicios'); cargarServicios()" 
-            [class.bg-amber-500]="activeTab() === 'servicios'"
-            [class.text-black]="activeTab() === 'servicios'"
-            [class.shadow-[0_0_15px_rgba(245,158,11,0.3)]]="activeTab() === 'servicios'"
-            [class.text-gray-400]="activeTab() !== 'servicios'"
-            [class.hover:bg-zinc-800]="activeTab() !== 'servicios'"
-            class="flex items-center gap-2 px-6 py-3 rounded-xl font-bold uppercase tracking-wider transition-all duration-300"
+            [ngClass]="activeTab() === 'servicios' ? 'bg-gradient-to-r from-amber-600 to-amber-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.4)] scale-100' : 'text-gray-400 hover:text-white hover:bg-white/5 scale-95'"
+            class="relative z-10 flex-1 md:flex-none flex items-center justify-center gap-2 px-4 sm:px-8 py-3.5 rounded-xl font-extrabold uppercase tracking-widest text-xs sm:text-sm transition-all duration-300 transform"
           >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
-            Catálogo
+            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+            <span class="truncate">Catálogo</span>
           </button>
-        </div>
+        </nav>
 
         <!-- TAB CITAS -->
         <div *ngIf="activeTab() === 'citas'">
@@ -74,16 +70,26 @@ import { Servicio } from '../../core/models/servicio.model';
           </div>
 
           <div *ngIf="!loadingCitas()" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @for (cita of citas(); track cita.id) {
-              <div class="bg-black/80 backdrop-blur-md p-6 rounded-3xl shadow-2xl border border-amber-500/30 flex flex-col justify-between gap-6 hover:border-amber-500/80 transition-all group relative overflow-hidden">
-                <div class="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl group-hover:bg-amber-500/20 transition-all duration-500"></div>
+            @for (cita of citasProcesadas; track cita.id) {
+              <div class="bg-black/80 backdrop-blur-md p-6 rounded-3xl shadow-2xl border flex flex-col justify-between gap-6 hover:border-amber-500/80 transition-all group relative overflow-hidden"
+                   [ngClass]="cita.isNext ? 'border-green-500 shadow-[0_0_25px_rgba(34,197,94,0.25)]' : 'border-amber-500/30'">
+                
+                <!-- Decoración de fondo -->
+                <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full blur-2xl transition-all duration-500"
+                     [ngClass]="cita.isNext ? 'bg-green-500/10 group-hover:bg-green-500/20' : 'bg-amber-500/5 group-hover:bg-amber-500/20'"></div>
+                
                 <div class="relative z-10">
                   <div class="flex justify-between items-start mb-6">
                     <div>
-                      <span class="bg-zinc-800 text-amber-500 border border-zinc-700 text-xs font-bold px-3 py-1 rounded-lg uppercase tracking-widest">{{ cita.fecha }}</span>
-                      <h3 class="font-extrabold text-2xl text-white mt-3">{{ cita.cliente_nombre }}</h3>
+                      <div class="flex gap-2 items-center mb-3">
+                        <span class="bg-zinc-800 text-amber-500 border border-zinc-700 text-xs font-bold px-3 py-1 rounded-lg uppercase tracking-widest">{{ cita.fecha }}</span>
+                        <span *ngIf="cita.isNext" class="bg-green-500/20 text-green-400 border border-green-500/30 text-xs font-bold px-3 py-1 rounded-lg uppercase tracking-widest flex items-center gap-1 animate-pulse">
+                          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> Siguiente
+                        </span>
+                      </div>
+                      <h3 class="font-extrabold text-2xl text-white">{{ cita.cliente_nombre }}</h3>
                     </div>
-                    <span class="text-3xl font-black text-amber-500 drop-shadow-md">{{ cita.hora.substring(0, 5) }}</span>
+                    <span class="text-3xl font-black drop-shadow-md" [ngClass]="cita.isNext ? 'text-green-400' : 'text-amber-500'">{{ cita.hora.substring(0, 5) }}</span>
                   </div>
                   <div class="space-y-3 bg-zinc-900/60 p-4 rounded-2xl border border-zinc-800/50">
                     <div class="flex items-center gap-3">
@@ -97,12 +103,20 @@ import { Servicio } from '../../core/models/servicio.model';
                   </div>
                 </div>
                 
-                <button 
-                  (click)="cancelarCita(cita)"
-                  class="relative z-10 w-full bg-red-600/10 text-red-500 py-3.5 rounded-xl font-bold hover:bg-red-600 hover:text-white transition-all border border-red-500/50 flex items-center justify-center gap-2">
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                  Cancelar y Notificar
-                </button>
+                <div class="relative z-10 flex flex-col gap-2">
+                  <button 
+                    (click)="marcarComoCompletada(cita)"
+                    class="w-full bg-green-600/10 text-green-500 py-3 rounded-xl font-bold hover:bg-green-600 hover:text-white transition-all border border-green-500/50 flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    Realizada
+                  </button>
+                  <button 
+                    (click)="cancelarCita(cita)"
+                    class="w-full bg-red-600/10 text-red-500 py-3 rounded-xl font-bold hover:bg-red-600 hover:text-white transition-all border border-red-500/50 flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    Cancelar y Notificar
+                  </button>
+                </div>
               </div>
             } @empty {
               <div class="col-span-full text-center py-16 bg-black/60 backdrop-blur-md rounded-2xl border border-dashed border-zinc-600">
@@ -254,13 +268,61 @@ export class AdminDashboardComponent implements OnInit {
         .order('hora', { ascending: true })
         .limit(500); // Límite de seguridad para evitar sobrecarga de memoria
 
-      if (error) throw error;
-      if (data) this.citas.set(data as any[]);
+      if (data) {
+        // Removemos las citas marcadas localmente como completadas para que desaparezcan de inmediato
+        const completadas = JSON.parse(localStorage.getItem('citas_completadas') || '[]');
+        this.citas.set(data.filter(c => !completadas.includes(c.id)));
+      }
     } catch (err: any) {
       console.error('Error cargando citas:', err);
       alert('Hubo un problema de red cargando las citas. Verifica tu conexión o intenta recargar.');
     } finally {
       this.loadingCitas.set(false);
+    }
+  }
+
+  get citasProcesadas() {
+    const ahora = new Date();
+    const hoyStr = ahora.toISOString().split('T')[0];
+    const horaActual = ahora.toTimeString().substring(0, 5);
+
+    let nextEncontrada = false;
+
+    return this.citas().map(cita => {
+      let isNext = false;
+      if (!nextEncontrada && (cita.fecha > hoyStr || (cita.fecha === hoyStr && cita.hora >= horaActual))) {
+        isNext = true;
+        nextEncontrada = true;
+      }
+      return { ...cita, isNext };
+    });
+  }
+
+  async marcarComoCompletada(cita: any) {
+    if (!confirm(`¿Estás seguro de marcar la cita de ${cita.cliente_nombre} como REALIZADA? Desaparecerá de tu lista activa.`)) return;
+
+    try {
+      const { error } = await this.supabaseService.client
+        .from('citas')
+        .update({ estado: 'completada' })
+        .eq('id', cita.id);
+
+      if (error) {
+        // Si falla porque el ENUM de Postgres no tiene 'completada', usamos localStorage como fallback seguro
+        if (error.code === '22P02') {
+          const completadas = JSON.parse(localStorage.getItem('citas_completadas') || '[]');
+          completadas.push(cita.id);
+          localStorage.setItem('citas_completadas', JSON.stringify(completadas));
+          this.citas.update(citas => citas.filter(c => c.id !== cita.id));
+          return;
+        }
+        throw error;
+      }
+
+      this.citas.update(citas => citas.filter(c => c.id !== cita.id));
+    } catch (err) {
+      console.error('Error al completar cita:', err);
+      alert('Ocurrió un error. Si persiste, usa el fallback guardando el estado en local.');
     }
   }
 

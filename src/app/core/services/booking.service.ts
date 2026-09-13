@@ -18,14 +18,18 @@ export class BookingService {
 
   slotsDisponibles = computed(() => {
     const slots: { hora: string; ocupado: boolean }[] = [];
-    const start = 9 * 60; // 9:00 AM
+
+    // Verificar si la fecha seleccionada es hoy para bloquear horas pasadas
+    const fechaSeleccionada = this.selectedFecha();
+    
+    // Los domingos el horario empieza a las 10:00 AM, el resto de días a las 9:00 AM
+    const esDomingo = fechaSeleccionada?.getDay() === 0;
+    const start = esDomingo ? 10 * 60 : 9 * 60;
     const end = 20 * 60; // 8:00 PM
 
     // Leemos la duración directamente de la base de datos (por defecto 60 min)
     const duracion = this.selectedServicio()?.duracion_minutos || 60;
 
-    // Verificar si la fecha seleccionada es hoy para bloquear horas pasadas
-    const fechaSeleccionada = this.selectedFecha();
     const hoy = new Date();
     const esHoy = fechaSeleccionada && 
                   fechaSeleccionada.getDate() === hoy.getDate() && 
